@@ -133,7 +133,7 @@ class Grid2d:
         for y in range(self._min_y, self._max_y + 1):
             line = ""
             for x in range(self._min_x, self._max_x + 1):
-                line += self._grid[Vector2.create(x, y)]
+                line += str(self._grid[Vector2.create(x, y)])
             line += '\n'
             st += line
         return st
