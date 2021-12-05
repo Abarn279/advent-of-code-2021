@@ -1,4 +1,5 @@
 from collections import defaultdict
+from math import sqrt
 
 v2Cache = {}
 class Vector2:
@@ -21,8 +22,17 @@ class Vector2:
         return abs(self.x - other.x) + abs(self.y - other.y)
     def sqr_magnitude(self):
         return self.x ** 2 + self.y ** 2
+    def magnitude(self):
+        return sqrt(self.sqr_magnitude())
+    def normalized(self):
+        m = self.magnitude()
+        return Vector2(self.x / m, self.y / m)
+    def rounded(self):
+        return Vector2(int(round(self.x)), int(round(self.y)))
     def __add__(self, other):
         return Vector2(self.x + other.x, self.y + other.y)
+    def __sub__(self, other):
+        return Vector2(self.x - other.x, self.y - other.y)
     def __mul__(self, other):
         if isinstance(other, int) or isinstance(other, float):
             return Vector2(self.x * other, self.y * other)
@@ -114,6 +124,9 @@ class Grid2d:
         ''' Get position bounds of this grid. Tuple of min position (x,y) and max position (x,y) '''
         return (Vector2.create(self._min_x, self._min_y), Vector2.create(self._max_x, self._max_y))
 
+    def keys(self):
+        return self._grid.keys()
+
     def values(self):
         return self._grid.values()
 
@@ -133,7 +146,7 @@ class Grid2d:
         for y in range(self._min_y, self._max_y + 1):
             line = ""
             for x in range(self._min_x, self._max_x + 1):
-                line += self._grid[Vector2.create(x, y)]
+                line += str(self._grid[Vector2.create(x, y)])
             line += '\n'
             st += line
         return st
