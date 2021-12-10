@@ -28,8 +28,6 @@ digits = {
     'abcdfg': 9
 } 
 
-
-
 for entry in entries:
     patterns, output = entry.split(' | ') 
     patterns = patterns.split(' ')
@@ -84,5 +82,5 @@ for entry in entries:
     
     # FINALLY, add this to the sum
     summed_no += int(final_no)
-    
+
 print(summed_no)
