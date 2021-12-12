@@ -26,12 +26,8 @@ def get_neighbors_fn(n):
     
     return neighbors
 
-def is_goal_fn(n): 
-    x = n.split(',')[-1]
-    return x == 'end'
-
 response = bfs(start='start',
-    is_goal_fn=is_goal_fn,
+    is_goal_fn=lambda n: n.split(',')[-1] == 'end',
     get_neighbors_fn=get_neighbors_fn,
     get_key_fn = lambda n: n,
     find_all_goals=True
@@ -58,7 +54,7 @@ def get_neighbors_fn(n):
     return neighbors
 
 response = bfs(start='start',
-    is_goal_fn=is_goal_fn,
+    is_goal_fn=lambda n: n.split(',')[-1] == 'end',
     get_neighbors_fn=get_neighbors_fn,
     get_key_fn = lambda n: n,
     find_all_goals=True
