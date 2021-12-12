@@ -1,4 +1,5 @@
 import heapq
+from collections import deque
 
 class PriorityQueue:
     def __init__(self):
@@ -12,6 +13,31 @@ class PriorityQueue:
     
     def get(self):
         return heapq.heappop(self.elements)[1]
+
+class SearchResponse:
+    def __init__(self, found, cost = None, final_node = None, visited = None):
+        self.found = found
+        self.cost = cost
+        self.final_node = final_node
+        self.visited = visited
+
+def bfs(start, is_goal_fn, get_neighbors_fn, get_key_fn):
+    q = deque()
+    visited = set()
+    q.append((start, 0))
+
+    while len(q) > 0:
+        current, cost = q.popleft()
+        visited.add(get_key_fn(current))
+
+        for neighbor in get_neighbors_fn(current):
+            if is_goal_fn(current):
+                return SearchResponse(True, cost, current, visited)
+
+            if neighbor not in visited:
+                q.append((neighbor, cost + 1))
+    
+    return SearchResponse(False, None, None, visited)
 
 def astar(start, is_goal_fn, heuristic_fn, cost_fn, get_neighbors_fn, get_key_fn, include_final_node = False):
     queue = PriorityQueue()
