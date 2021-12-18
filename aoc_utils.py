@@ -40,6 +40,8 @@ class Vector2:
             return Vector2(self.x * other.x, self.y * other.y)
     def __eq__(self, other):
         return self.x == other.x and self.y == other.y
+    def __lt__(self, other):
+        return self.sqr_magnitude() < other.sqr_magnitude()
     def __hash__(self):
         return hash(self.cached_string)
     def __repr__(self):
@@ -128,6 +130,9 @@ class Grid2d:
 
     def values(self):
         return self.__grid.values()
+
+    def get_cardinal_neighbors(self, v):
+        return [v + d for d in [Vector2(0, 1), Vector2(1, 0), Vector2(-1, 0), Vector2(0, -1)] if v + d in self.__grid]
 
     def __contains__(self, key: Vector2):
         return key in self.__grid
